@@ -1,7 +1,9 @@
 from flask import Flask
-from flask import render_template,flash,redirect
+from flask import render_template,flash,redirect,send_file
 from forms import LoginForm, DataForm
 from config import Config
+import tty
+import webbrowser
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -30,10 +32,16 @@ def evaluator():
         data1=form.data1.data
         data2=form.data2.data
         # evaluate here
-        return redirect('/result')
+        tty.run()
+        return redirect('/limeresult')
     return render_template('evaluator.html',title='Evaluator',form=form)
 
 
-@app.route('/result')
+@app.route('/tensorflowresult')
 def result():
     return render_template('result.html', title='Result')
+
+
+@app.route('/limeresult')
+def limeresult():
+    return send_file("static/limeresult.html")
