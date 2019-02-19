@@ -10,22 +10,44 @@ from IPython.core.display import display, HTML
 
 np.random.seed(1)
 
+def readfromcsv(address):
+    data = np.genfromtxt('c:\StudentsPerformance.csv', delimiter=',', dtype=str)
+    #print(data[0])
+    labels = []
+    for i in range(0, len(data[0])):
+        labels.append(data[0][i].strip('"'))
+    datae=data[1:,:]
+    for i in range(0,np.size(datae,0)):
+        for r in range(0,np.size(datae,1)):
+            datae[i][r]=datae[i][r].strip('"')
+    print(data[0])
+    return labels,datae
 
-def run():#import dataset
-    data = np.genfromtxt('G:\StudentsPerformance.csv', delimiter=',', dtype=str)
+def readfromform(form):
+    dataset=form.split(',')
+    i=0
+    while i<len(dataset):
+        dataset[i]=int(dataset[i])-1
+        i+=1
+    return dataset
+
+def run(categoricalfeatures,labelsindex,address):#import dataset
+    #read csv
+    labelsindex=int(labelsindex)-1
+    feature_names,data=readfromcsv(address)
     #create labels
-    labels = data[:,3]
+    labels = data[:,labelsindex]
     le= sklearn.preprocessing.LabelEncoder()
     le.fit(labels)
     labels = le.transform(labels)
     class_names = le.classes_
-    data=np.concatenate((data[:,0:3],data[:,4:]),axis=1)
-    #print(data)
-    categorical_features = [0,1,2,3,4,5]
+    data=np.concatenate((data[:,0:labelsindex],data[:,labelsindex+1:]),axis=1)
 
+    #categorical_features = [0,1,2,3,4,5]
+    categorical_features=readfromform(categoricalfeatures)
     feature_names = ["Gender", "Race",  "Parent Education", "Lunch", "Test preparation","Math", "Reading", "Writing"]
-
     #create labels' names
+
     categorical_names = {}
     for feature in categorical_features:
         le = sklearn.preprocessing.LabelEncoder()

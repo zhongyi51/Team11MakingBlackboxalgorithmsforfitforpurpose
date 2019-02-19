@@ -32,7 +32,8 @@ def evaluator():
         data1=form.data1.data
         data2=form.data2.data
         # evaluate here
-        tty.run()
+        address='C:\StudentsPerformance.csv'
+        tty.run(data1,data2,address)
         return redirect('/limeresult')
     return render_template('evaluator.html',title='Evaluator',form=form)
 
