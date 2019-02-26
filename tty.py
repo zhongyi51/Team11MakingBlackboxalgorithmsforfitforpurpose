@@ -11,7 +11,7 @@ from IPython.core.display import display, HTML
 np.random.seed(1)
 
 def readfromcsv(address):
-    data = np.genfromtxt('c:\StudentsPerformance.csv', delimiter=',', dtype=str)
+    data = np.genfromtxt(address, delimiter=',', dtype=str)
     #print(data[0])
     labels = []
     for i in range(0, len(data[0])):
@@ -20,21 +20,27 @@ def readfromcsv(address):
     for i in range(0,np.size(datae,0)):
         for r in range(0,np.size(datae,1)):
             datae[i][r]=datae[i][r].strip('"')
-    print(data[0])
+    #print(data[0])
     return labels,datae
 
-def readfromform(form):
-    dataset=form.split(',')
-    i=0
-    while i<len(dataset):
-        dataset[i]=int(dataset[i])-1
-        i+=1
-    return dataset
+def readfromtlabeltext(text,labels):
+    i=labels.index(text)
+    return i
 
-def run(categoricalfeatures,labelsindex,address):#import dataset
+
+def readfromfeaturetext(features, labels):
+    dataset=features.split(',')
+    i=[]
+    for e in dataset:
+        i.append(labels.index(e))
+    return i
+
+def run(categoricalfeaturestext,labelstext,address):#import dataset
     #read csv
-    labelsindex=int(labelsindex)-1
     feature_names,data=readfromcsv(address)
+    print(feature_names)
+    categorical_features=readfromfeaturetext(categoricalfeaturestext,feature_names)
+    labelsindex=readfromtlabeltext(labelstext,feature_names)
     #create labels
     labels = data[:,labelsindex]
     le= sklearn.preprocessing.LabelEncoder()
@@ -44,8 +50,7 @@ def run(categoricalfeatures,labelsindex,address):#import dataset
     data=np.concatenate((data[:,0:labelsindex],data[:,labelsindex+1:]),axis=1)
 
     #categorical_features = [0,1,2,3,4,5]
-    categorical_features=readfromform(categoricalfeatures)
-    feature_names = ["Gender", "Race",  "Parent Education", "Lunch", "Test preparation","Math", "Reading", "Writing"]
+    #feature_names = ["Gender", "Race",  "Parent Education", "Lunch", "Test preparation","Math", "Reading", "Writing"]
     #create labels' names
 
     categorical_names = {}
