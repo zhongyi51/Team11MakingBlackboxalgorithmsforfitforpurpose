@@ -35800,25 +35800,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_div05KIJ2ZC14R7H1L"></div>
+        <div class="lime top_div" id="top_divQ9PF8Q6AVTTKFOK"></div>
         
         <script>
-        var top_div = d3.select('#top_div05KIJ2ZC14R7H1L').classed('lime top_div', true);
+        var top_div = d3.select('#top_divQ9PF8Q6AVTTKFOK').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["free/reduced", "standard"], [0.1601552963256836, 0.8398447036743164]);
+            var pp = new lime.PredictProba(pp_svg, ["free/reduced", "standard"], [0.3048636317253113, 0.6951363682746887]);
             
         
         var exp_div;
             var exp = new lime.Explanation(["free/reduced", "standard"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["Gender=male", 0.10535895897826159], ["Lunch=completed", -0.09660855773734876], ["69.00 < Reading <= 79.00", 0.08827296471139032], ["Parent Education=high school", 0.06778768332442628], ["Race=group E", 0.0587736771857099]], 1, exp_div);
+                exp.show([["math score > 79.00", -0.12239475469771294], ["lunch=completed", -0.10034095308036922], ["69.00 < reading score <= 79.00", 0.1002160814444923], ["gender=male", 0.09206792778852842], ["parental level of education=high school", 0.049004659587167154]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["Gender=male", "True", 0.10535895897826159], ["Lunch=completed", "True", -0.09660855773734876], ["Reading", "76.00", 0.08827296471139032], ["Parent Education=high school", "True", 0.06778768332442628], ["Race=group E", "True", 0.0587736771857099]], 1, raw_div);
+            exp.show_raw_tabular([["math score", "80.00", -0.12239475469771294], ["lunch=completed", "True", -0.10034095308036922], ["reading score", "76.00", 0.1002160814444923], ["gender=male", "True", 0.09206792778852842], ["parental level of education=high school", "True", 0.049004659587167154]], 1, raw_div);
         
         </script>
         </body></html>
