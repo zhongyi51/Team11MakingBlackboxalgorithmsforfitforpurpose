@@ -35800,25 +35800,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divQ9PF8Q6AVTTKFOK"></div>
+        <div class="lime top_div" id="top_divS82A211D0CD32I1"></div>
         
         <script>
-        var top_div = d3.select('#top_divQ9PF8Q6AVTTKFOK').classed('lime top_div', true);
+        var top_div = d3.select('#top_divS82A211D0CD32I1').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["free/reduced", "standard"], [0.3048636317253113, 0.6951363682746887]);
+            var pp = new lime.PredictProba(pp_svg, ["0", "1"], [0.17384600639343262, 0.8261539936065674]);
             
         
         var exp_div;
-            var exp = new lime.Explanation(["free/reduced", "standard"]);
+            var exp = new lime.Explanation(["0", "1"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["math score > 79.00", -0.12239475469771294], ["lunch=completed", -0.10034095308036922], ["69.00 < reading score <= 79.00", 0.1002160814444923], ["gender=male", 0.09206792778852842], ["parental level of education=high school", 0.049004659587167154]], 1, exp_div);
+                exp.show([["ca <= 0.00", 0.3257466380803055], ["sex=1", -0.23359400191434976], ["oldpeak > 1.60", -0.15627446608415188], ["thal <= 2.00", 0.14601733213330131], ["exang <= 0.00", 0.12042102616564389]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["math score", "80.00", -0.12239475469771294], ["lunch=completed", "True", -0.10034095308036922], ["reading score", "76.00", 0.1002160814444923], ["gender=male", "True", 0.09206792778852842], ["parental level of education=high school", "True", 0.049004659587167154]], 1, raw_div);
+            exp.show_raw_tabular([["ca", "0.00", 0.3257466380803055], ["sex=1", "True", -0.23359400191434976], ["oldpeak", "2.30", -0.15627446608415188], ["thal", "1.00", 0.14601733213330131], ["exang", "0.00", 0.12042102616564389]], 1, raw_div);
         
         </script>
         </body></html>

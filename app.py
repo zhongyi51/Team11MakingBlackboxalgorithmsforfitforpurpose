@@ -31,9 +31,10 @@ def evaluator():
     if form.validate_on_submit():
         data1=form.data1.data
         data2=form.data2.data
+        data3=form.data3.data
         # evaluate here
-        address='C:\StudentsPerformancx.csv'
-        tty.run(data1,data2,address)
+        address='C:\heart.csv'
+        tty.run(data1,data2,address,data3)
         return redirect('/limeresult')
     return render_template('evaluator.html',title='Evaluator',form=form)
 
