@@ -11,7 +11,7 @@ class LoginForm(FlaskForm):
 
 
 class DataForm(FlaskForm):
-    data1 = StringField('data1',validators=[DataRequired(message='Input data1...')])
-    data2 = StringField('data2',validators=[DataRequired(message='Input data2...')])
-    data3 = StringField('data3', validators=[DataRequired(message='Input data3...')])
+    data1 = StringField('Categorical Labels(exclude target)',validators=[DataRequired(message='Input data1...')])
+    data2 = StringField('Target Label',validators=[DataRequired(message='Input data2...')])
+    data3 = StringField('Predictable Sample', validators=[DataRequired(message='Input data3...')])
     submit = SubmitField('Evaluate')
