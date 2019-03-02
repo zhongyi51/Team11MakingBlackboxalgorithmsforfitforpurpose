@@ -35,12 +35,13 @@ def readfromfeaturetext(features, labels):
         i.append(labels.index(e))
     return i
 
-def run(categoricalfeaturestext,labelstext,address):#import dataset
+def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
     #read csv
+    instance=np.array(instance.split(','))
     feature_names,data=readfromcsv(address)
-    print(feature_names)
     categorical_features=readfromfeaturetext(categoricalfeaturestext,feature_names)
     labelsindex=readfromtlabeltext(labelstext,feature_names)
+    #del(instance[labelsindex])
     #create labels
     labels = data[:,labelsindex]
     le= sklearn.preprocessing.LabelEncoder()
@@ -48,11 +49,11 @@ def run(categoricalfeaturestext,labelstext,address):#import dataset
     labels = le.transform(labels)
     class_names = le.classes_
     data=np.concatenate((data[:,0:labelsindex],data[:,labelsindex+1:]),axis=1)
-
+    instance=np.concatenate((instance[0:labelsindex],instance[labelsindex+1:]),axis=0)
     #categorical_features = [0,1,2,3,4,5]
     #feature_names = ["Gender", "Race",  "Parent Education", "Lunch", "Test preparation","Math", "Reading", "Writing"]
-    #create labels' names
 
+    #create labels' names
     categorical_names = {}
     for feature in categorical_features:
         le = sklearn.preprocessing.LabelEncoder()
@@ -60,26 +61,31 @@ def run(categoricalfeaturestext,labelstext,address):#import dataset
         data[:, feature] = le.transform(data[:, feature])
         categorical_names[feature] = le.classes_
 
+    print(instance,data[1])
+
+    #numeral transform
     data = data.astype(float)
+    instance=instance.astype(float)
     encoder = sklearn.preprocessing.OneHotEncoder(categorical_features=categorical_features)
     np.random.seed(1)
     train, test, labels_train, labels_test = sklearn.model_selection.train_test_split(data, labels, train_size=0.80)
     encoder.fit(data)
     encoded_train = encoder.transform(train)
 
+    #predicting
     import xgboost
     gbtree = xgboost.XGBClassifier(n_estimators=300, max_depth=5)
     gbtree.fit(encoded_train, labels_train)
 
     sklearn.metrics.accuracy_score(labels_test, gbtree.predict(encoder.transform(test)))
     predict_fn = lambda x: gbtree.predict_proba(encoder.transform(x)).astype(float)
-
     explainer = lime.lime_tabular.LimeTabularExplainer(train ,feature_names = feature_names,class_names=class_names,
                                                        categorical_features=categorical_features,
                                                        categorical_names=categorical_names, kernel_width=3)
 
     np.random.seed(1)
-    i = 199
-    exp = explainer.explain_instance(test[i], predict_fn, num_features=5)
+    #i = int(instance)
+    #print(instance)
+    exp = explainer.explain_instance(instance, predict_fn, num_features=5)
     exp.save_to_file("static/limeresult.html",show_all=False)
     return 0
