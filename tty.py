@@ -39,8 +39,9 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
     #read csv
     instance=np.array(instance.split(','))
     feature_names,data=readfromcsv(address)
-    categorical_features=readfromfeaturetext(categoricalfeaturestext,feature_names)
     labelsindex=readfromtlabeltext(labelstext,feature_names)
+    feature_names.remove(labelstext)
+    categorical_features=readfromfeaturetext(categoricalfeaturestext,feature_names)
     #del(instance[labelsindex])
     #create labels
     labels = data[:,labelsindex]
@@ -49,11 +50,11 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
     labels = le.transform(labels)
     class_names = le.classes_
     data=np.concatenate((data[:,0:labelsindex],data[:,labelsindex+1:]),axis=1)
-    instance=np.concatenate((instance[0:labelsindex],instance[labelsindex+1:]),axis=0)
+    #instance=np.concatenate((instance[0:labelsindex],instance[labelsindex+1:]),axis=0)
     #categorical_features = [0,1,2,3,4,5]
     #feature_names = ["Gender", "Race",  "Parent Education", "Lunch", "Test preparation","Math", "Reading", "Writing"]
-
     #create labels' names
+    data=np.append(data,[instance],axis=0)#add instance to data to transform it
     categorical_names = {}
     for feature in categorical_features:
         le = sklearn.preprocessing.LabelEncoder()
@@ -61,8 +62,9 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
         data[:, feature] = le.transform(data[:, feature])
         categorical_names[feature] = le.classes_
 
-    print(instance,data[1])
-
+    #take instance out
+    data=data[0:len(data)-1]
+    instance=data[-1]
     #numeral transform
     data = data.astype(float)
     instance=instance.astype(float)
@@ -84,6 +86,7 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
                                                        categorical_names=categorical_names, kernel_width=3)
 
     np.random.seed(1)
+    print(test[1],instance)
     #i = int(instance)
     #print(instance)
     exp = explainer.explain_instance(instance, predict_fn, num_features=5)
