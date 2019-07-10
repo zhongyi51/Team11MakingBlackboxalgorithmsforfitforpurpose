@@ -67,8 +67,8 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
         categorical_names[feature] = le.classes_
 
     #take instance out
-    data=data[0:len(data)-1]
     instance=data[-1]
+    data=data[0:len(data)-1]
     #numeral transform
     data = data.astype(float)
     instance=instance.astype(float)
@@ -94,5 +94,5 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
     #i = int(instance)
     #print(instance)
     exp = explainer.explain_instance(instance, predict_fn, num_features=5)
-    exp.save_to_file("static/limeresult.html",show_all=False)
+    exp.save_to_file("static/limeresult.html",show_all=True)
     return 0
