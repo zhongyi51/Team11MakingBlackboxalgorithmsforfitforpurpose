@@ -10,6 +10,10 @@ from IPython.core.display import display, HTML
 
 np.random.seed(1)
 
+def allowed_file(filename,ALLOWED_EXTENSIONS):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 def readfromcsv(address):
     data = np.genfromtxt(address, delimiter=',', dtype=str)
     #print(data[0])
