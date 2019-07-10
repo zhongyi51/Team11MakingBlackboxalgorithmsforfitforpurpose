@@ -94,5 +94,5 @@ def run(categoricalfeaturestext,labelstext,address,instance):#import dataset
     #i = int(instance)
     #print(instance)
     exp = explainer.explain_instance(instance, predict_fn, num_features=5)
-    exp.save_to_file("static/limeresult.html",show_all=True)
+    exp.save_to_file("static/limeresult.html",show_all=False)
     return 0
